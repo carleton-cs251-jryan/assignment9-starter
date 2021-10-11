@@ -31,7 +31,7 @@ def buildCode():
 
   # Make sure that warning causes test to fail
   if ('warning' in compile_return.stdout):
-    return 'Test failed because of compiler warning.'
+    return 'Testing failed because of compiler warning.'
 
   return None
 
@@ -43,9 +43,11 @@ def runIt():
   # Run it once without valgrind
   print("Running tests without invoking valgrind...\n")
   process_out = runcmd('./tester')
-  print(process_out.stdout)
   if process_out.returncode != 0:
-    return "Runtime error."
+    # print(process_out.stdout)
+    return f"Runtime error: '{process_out.stdout}'"
+  else:
+    print(process_out.stdout)
 
   # Run it again with valgrind
   print("Running tests with valgrind invoked...\n")
