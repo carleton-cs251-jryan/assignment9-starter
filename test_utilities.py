@@ -26,7 +26,7 @@ def buildCode():
         return 'Please do not disable warnings.'
 
   # Compile, show output
-  compile_return = runcmd('clang -g -o tester vector.c tester.c')
+  compile_return = runcmd('clang -g -o tester student-vector.c tester.c')
   print(compile_return.stdout)
 
   # Make sure that warning causes test to fail
@@ -44,8 +44,10 @@ def runIt():
   print("Running tests without invoking valgrind...\n")
   process_out = runcmd('./tester')
   if process_out.returncode != 0:
-    # print(process_out.stdout)
-    return f"Runtime error: '{process_out.stdout}'"
+    if process_out.stdout:
+      return f"Runtime error: '{process_out.stdout}'"
+    else:
+      return "Runtime error: apparent segmentation fault."
   else:
     print(process_out.stdout)
 
@@ -57,7 +59,7 @@ def runIt():
     print('---VALGRIND ERROR---')
     print('Valgrind test results')
     print(valgrind_test_results.output)
-    return "Valgrind error."
+    return "Valgrind error (see report above)."
   else:
     print('\tVALGRIND DETECTED NO MEMORY ERRORS!')
 
@@ -72,6 +74,7 @@ def run_tests_with_valgrind(executable_command) -> TestResult:
         '--show-leak-kinds=all ' + \
         '--errors-for-leak-kinds=all ' + \
         '--error-exitcode=99 ' + \
+        '--track-origins=yes ' + \
         executable_command
 
     try:
