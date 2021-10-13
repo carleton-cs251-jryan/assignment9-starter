@@ -44,11 +44,9 @@ def runIt():
   print("Running tests without invoking valgrind...\n")
   process_out = runcmd('./tester')
   if process_out.returncode != 0:
-    if process_out.stdout:
-      return f"Runtime error: '{process_out.stdout}'"
-    else:
-      return "Runtime error: apparent segmentation fault."
+    return f"Runtime error! Use this command to view error message: clang -g -o tester vector.c tester.c; ./tester"
   else:
+    print(vars(process_out))
     print(process_out.stdout)
 
   # Run it again with valgrind
