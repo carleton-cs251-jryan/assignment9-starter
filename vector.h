@@ -5,18 +5,19 @@
 
 struct Vector
 {
-    // A pointer to a traditional C array to hold data
+    // A pointer to a standard C int array to hold data
     int *array;
 
-    // The size of the actual C array that you have allocated
+    // The size of the actual C array that you have allocated, expressed
+    // in terms of the number of int-sized slots allocated for the array.
     int memorySize;
 
-    // The virtual size of the vector, i.e. how much data is in it
-    // from the user's perspective
+    // The virtual size of the vector, i.e., how many integers are currently
+    // in it from the user's perspective.
     int size;
 };
 
-/* Typing "struct Vector" all the time is cumbersome, this sets it up so you can
+/* Typing "struct Vector" all the time is cumbersome; this sets it up so you can
  just type "Vector" instead. */
 
 typedef struct Vector Vector;
